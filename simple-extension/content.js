@@ -6,6 +6,7 @@ let isDragging = false;
 let startX = 0;
 let startY = 0;
 let selectionBox = null;
+let highlightedLinks = [];
 
 // Listen for key events
 document.addEventListener('keydown', (e) => {
@@ -21,6 +22,7 @@ document.addEventListener('keyup', (e) => {
     isDragging = false;
     document.body.style.userSelect = '';
     removeSelectionBox();
+    clearHighlightedLinks();
   }
 });
 
@@ -38,6 +40,7 @@ document.addEventListener('mousedown', (e) => {
 document.addEventListener('mousemove', (e) => {
   if (isDragging && selectionBox) {
     updateSelectionBox(startX, startY, e.pageX, e.pageY);
+    highlightLinksInSelection();
     e.preventDefault();
   }
 });
@@ -54,6 +57,7 @@ document.addEventListener('mouseup', (e) => {
     
     isDragging = false;
     removeSelectionBox();
+    clearHighlightedLinks();
     e.preventDefault();
   }
 });
@@ -135,4 +139,54 @@ function getLinksInSelection() {
   }
   
   return links;
+}
+
+function highlightLinksInSelection() {
+  clearHighlightedLinks();
+  
+  if (!selectionBox) return;
+  
+  const rect = selectionBox.getBoundingClientRect();
+  const scrollX = window.pageXOffset;
+  const scrollY = window.pageYOffset;
+  
+  const selectionArea = {
+    left: rect.left + scrollX,
+    top: rect.top + scrollY,
+    right: rect.right + scrollX,
+    bottom: rect.bottom + scrollY
+  };
+  
+  const allLinks = document.querySelectorAll('a[href]');
+  
+  for (const link of allLinks) {
+    const linkRect = link.getBoundingClientRect();
+    const linkArea = {
+      left: linkRect.left + scrollX,
+      top: linkRect.top + scrollY,
+      right: linkRect.right + scrollX,
+      bottom: linkRect.bottom + scrollY
+    };
+    
+    if (linkArea.left < selectionArea.right &&
+        linkArea.right > selectionArea.left &&
+        linkArea.top < selectionArea.bottom &&
+        linkArea.bottom > selectionArea.top) {
+      
+      const href = link.href;
+      if (href && href.startsWith('http')) {
+        link.style.backgroundColor = 'rgba(255, 102, 0, 0.3)';
+        link.style.outline = '2px solid #ff6600';
+        highlightedLinks.push(link);
+      }
+    }
+  }
+}
+
+function clearHighlightedLinks() {
+  for (const link of highlightedLinks) {
+    link.style.backgroundColor = '';
+    link.style.outline = '';
+  }
+  highlightedLinks = [];
 }

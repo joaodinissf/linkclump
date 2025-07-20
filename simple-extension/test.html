@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LinkClump Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .link-section {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        a {
+            display: inline-block;
+            margin: 5px 10px;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #0066cc;
+            border: 1px solid #0066cc;
+            border-radius: 3px;
+        }
+        a:hover {
+            background-color: #f0f8ff;
+        }
+    </style>
+</head>
+<body>
+    <h1>LinkClump Extension Test Page</h1>
+    <p>Instructions: Hold Z key and drag to select multiple links. They should highlight in orange during drag.</p>
+    
+    <div class="link-section">
+        <h2>Test Links Section 1</h2>
+        <a href="https://google.com">Google</a>
+        <a href="https://github.com">GitHub</a>
+        <a href="https://stackoverflow.com">Stack Overflow</a>
+        <a href="https://developer.mozilla.org">MDN Web Docs</a>
+    </div>
+    
+    <div class="link-section">
+        <h2>Test Links Section 2</h2>
+        <a href="https://youtube.com">YouTube</a>
+        <a href="https://reddit.com">Reddit</a>
+        <a href="https://wikipedia.org">Wikipedia</a>
+        <a href="https://twitter.com">Twitter</a>
+    </div>
+    
+    <div class="link-section">
+        <h2>Mixed Content</h2>
+        <p>Some text with <a href="https://example.com">inline links</a> and more text.</p>
+        <p>Another paragraph with <a href="https://test.com">another link</a> here.</p>
+        <a href="https://final.com">Final Link</a>
+    </div>
+</body>
+</html>
